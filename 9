@@ -1,0 +1,158 @@
+USER@OMG:~$ sudo wget https://nginx.org/keys/nginx_signing.key
+[sudo] password for USER: 
+--2024-12-15 09:57:58--  https://nginx.org/keys/nginx_signing.key
+Resolving nginx.org (nginx.org)... 52.58.199.22, 3.125.197.172, 2a05:d014:5c0:2600::6, ...
+Connecting to nginx.org (nginx.org)|52.58.199.22|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 11809 (12K) [application/octet-stream]
+Saving to: ‘nginx_signing.key’
+
+nginx_signing.key   100%[===================>]  11.53K  --.-KB/s    in 0s      
+
+2024-12-15 09:57:58 (487 MB/s) - ‘nginx_signing.key’ saved [11809/11809]
+
+USER@OMG:~$ sudo nano /etc/apt/sources.lis
+USER@OMG:~$ sudo apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://ru.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [725 kB]
+Get:6 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [538 kB]
+Get:7 http://ru.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [167 kB]
+Get:8 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [152 kB]
+Get:9 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [107 kB]
+Get:10 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [7,188 B]
+Get:11 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [525 kB]
+Get:12 http://ru.archive.ubuntu.com/ubuntu noble-updates/main Icons (48x48) [31.3 kB]
+Get:13 http://ru.archive.ubuntu.com/ubuntu noble-updates/main Icons (64x64) [44.5 kB]
+Get:14 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [102 kB]
+Get:15 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [212 B]
+Get:16 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [756 kB]
+Get:17 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [161 kB]
+Get:18 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [51.9 kB]
+Get:19 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+Get:20 http://ru.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [537 kB]
+Get:21 http://ru.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [104 kB]
+Get:22 http://ru.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:23 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [926 kB]
+Get:24 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [230 kB]
+Get:25 http://ru.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [309 kB]
+Get:26 http://ru.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:27 http://ru.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [208 B]
+Get:28 http://ru.archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:29 http://ru.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [11.7 kB]
+Get:30 http://ru.archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Fetched 5,866 kB in 2s (2,624 kB/s)                                        
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+40 packages can be upgraded. Run 'apt list --upgradable' to see them.
+USER@OMG:~$ sudo apt-get install nginx
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  nginx-common
+Suggested packages:
+  fcgiwrap nginx-doc
+The following NEW packages will be installed:
+  nginx nginx-common
+0 upgraded, 2 newly installed, 0 to remove and 40 not upgraded.
+Need to get 552 kB of archives.
+After this operation, 1,596 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://ru.archive.ubuntu.com/ubuntu
+amd64 nginx-common all 1.24.0-2ubuntu7.1 [31.2 kB]
+Get:2 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 nginx amd64 1.24.0-2ubuntu7.1 [521 kB]
+Fetched 552 kB in 1s (1,046 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package nginx-common.
+(Reading database ... 151139 files and directories currently installed.)
+Preparing to unpack .../nginx-common_1.24.0-2ubuntu7.1_all.deb ...
+Unpacking nginx-common (1.24.0-2ubuntu7.1) ...
+Selecting previously unselected package nginx.
+Preparing to unpack .../nginx_1.24.0-2ubuntu7.1_amd64.deb ...
+Unpacking nginx (1.24.0-2ubuntu7.1) ...
+Setting up nginx (1.24.0-2ubuntu7.1) ...
+Setting up nginx-common (1.24.0-2ubuntu7.1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.
+Processing triggers for ufw (0.36.2-6) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+USER@OMG:~$ sudo dpkg --remove nginx
+dpkg: dependency problems prevent removal of nginx:
+ nginx-common depends on nginx (>= 1.24.0-2ubuntu7.1).
+ nginx-common depends on nginx (<< 1.24.0-2ubuntu7.1.1~).
+ nginx-common depends on nginx (>= 1.24.0-2ubuntu7.1).
+ nginx-common depends on nginx (<< 1.24.0-2ubuntu7.1.1~).
+
+dpkg: error processing package nginx (--remove):
+ dependency problems - not removing
+Errors were encountered while processing:
+ nginx
+USER@OMG:~$ sudo dpkg --purge nginx
+dpkg: dependency problems prevent removal of nginx:
+ nginx-common depends on nginx (>= 1.24.0-2ubuntu7.1).
+ nginx-common depends on nginx (<< 1.24.0-2ubuntu7.1.1~).
+ nginx-common depends on nginx (>= 1.24.0-2ubuntu7.1).
+ nginx-common depends on nginx (<< 1.24.0-2ubuntu7.1.1~).
+
+dpkg: error processing package nginx (--purge):
+ dependency problems - not removing
+Errors were encountered while processing:
+ nginx
+USER@OMG:~$ sudo snap install free-games-webapp
+free-games-webapp 0.9.8 from NotForSale_ (mauringo) installed
+USER@OMG:~$ snap list
+Name                       Version          Rev    Tracking         Publisher   Notes
+bare                       1.0              5      latest/stable    canonical✓  base
+core18                     20240920         2846   latest/stable    canonical✓  base
+core22                     20241119         1722   latest/stable    canonical✓  base
+firefox                    133.0.3-1        5437   latest/stable/…  mozilla✓    -
+firmware-updater           0+git.7983059    147    1/stable/…       canonical✓  -
+free-games-webapp          0.9.8            2      latest/stable    mauringo    -
+gnome-42-2204              0+git.510a601    176    latest/stable/…  canonical✓  -
+gtk-common-themes          0.1-81-g442e511  1535   latest/stable/…  canonical✓  -
+snap-store                 0+git.e3dd562    1173   2/stable/…       canonical✓  -
+snapd                      2.66.1           23258  latest/stable    canonical✓  snapd
+snapd-desktop-integration  0.9              253    latest/stable/…  canonical✓  -
+USER@OMG:~$ sudo ufw allow 23
+Rules updated
+Rules updated (v6)
+USER@OMG:~$ sudo ufw allow 22
+Rules updated
+Rules updated (v6)
+USER@OMG:~$ sudo ufw allow 80
+Rules updated
+Rules updated (v6)
+USER@OMG:~$ sudo ufw enable
+Firewall is active and enabled on system startup
+USER@OMG:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+23                         ALLOW       Anywhere                  
+22                         ALLOW       Anywhere                  
+80                         ALLOW       Anywhere                  
+23 (v6)                    ALLOW       Anywhere (v6)             
+22 (v6)                    ALLOW       Anywhere (v6)             
+80 (v6)                    ALLOW       Anywhere (v6)             
+
+USER@OMG:~$ sudo sysctl -w net.ipv4.ip_forward=1
+net.ipv4.ip_forward = 1
+USER@OMG:~$ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+USER@OMG:~$ sudo iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination
+REDIRECT   tcp  --  anywhere             anywhere             tcp dpt:http redir ports 8080
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+USER@OMG:~$
