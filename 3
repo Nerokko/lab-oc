@@ -1,0 +1,47 @@
+1) Creating file with echo:
+	USER@OMG:~$ echo "textic" > text.txt
+	USER@OMG:~$ cd Documents
+	USER@OMG:~/Documents$ ls
+	text.txt
+
+
+
+1.1) Moving errors into exact file:
+	USER@OMG:~/Documents$ cat /etc/* 2> errors.txt
+	- - -
+	- -
+	-
+	
+
+2) Conveyor pipeline to return list with only accesses to file:
+!Filtration with sort and uniq
+	USER@OMG:~/Documents$ ls -l | cut -c 1-10 | sort | uniq
+	-rw-rw-r--
+	-rw-rw-rw-
+	total 24
+ 
+ -l : full list // cut -c 1-10 : access rights
+ 
+ 
+ 
+ 3) Process control:
+ !changing  SSH config / disabling auth with login
+ 	USER@OMG:~$ nano /etc/ssh/sshd_config
+ 	#PasswordAuthentication yes->no
+ 	USER@OMG:~$ service sshd restart
+ 	#PasswordAuthentication no->yes
+ 	USER@OMG:~$ service sshd reload
+ 	
+ 	restart is for powering off the utility and killing all connections
+ 	reload is just for 'reloading' configuration
+ 	
+ 
+ 
+ 3.1) Creating file with cat:
+ 	USER@OMG:~$ cat > new_file.txt
+	boo
+	boo
+	boooo
+	^C
+	USER@OMG:~$ (I pressed CtrlС)
+	
