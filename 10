@@ -1,0 +1,59 @@
+USER@OMG:~$ sudo apt-get update
+[sudo] password for USER: 
+Hit:1 http://ru.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://ru.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:3 http://ru.archive.ubuntu.com/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists... Done
+USER@OMG:~$ sudo apt-get install \
+> ca-certificates \
+> curl \
+> gnupg \
+> lsb-release
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+ca-certificates is already the newest version (20240203).
+ca-certificates set to manually installed.
+gnupg is already the newest version (2.4.4-2ubuntu17).
+gnupg set to manually installed.
+lsb-release is already the newest version (12.0-2).
+lsb-release set to manually installed.
+The following NEW packages will be installed:
+  curl
+0 upgraded, 1 newly installed, 0 to remove and 40 not upgraded.
+Need to get 227 kB of archives.
+After this operation, 534 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://ru.archive.ubuntu.com/ubuntu noble-updates/main amd64 curl amd64 8.5.0-2ubuntu10.5 [227 kB]
+Fetched 227 kB in 0s (705 kB/s)
+Selecting previously unselected package curl.
+(Reading database ... 151186 files and directories currently installed.)
+Preparing to unpack .../curl_8.5.0-2ubuntu10.5_amd64.deb ...
+Unpacking curl (8.5.0-2ubuntu10.5) ...
+Setting up curl (8.5.0-2ubuntu10.5) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+USER@OMG:~$ sudo mkdir -p /etc/apt/keyrings
+USER@OMG:~$ curl -fsSL https://download.docker.com.linux/ubuntu/gpg | sudo gpg --dearmor -o
+gpg: missing argument for option "-o"
+curl: (6) Could not resolve host: download.docker.com.linux
+USER@OMG:~$ curl -fsSL https://download.docker.com.linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl: (6) Could not resolve host: download.docker.com.linux
+gpg: no valid OpenPGP data found.
+USER@OMG:~$ echo
+
+USER@OMG:~$ echo \
+> "deb [arch=$(dpkg --print-architecture) signed-by=etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+> echo \
+> $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+USER@OMG:~$ sudo apt-get update
+E: Invalid value set for option Signed-By regarding source https://download.docker.com/linux/ubuntu/ echo (not a fingerprint)
+E: Invalid value set for option Signed-By regarding source https://download.docker.com/linux/ubuntu/ echo (not a fingerprint)
+E: The list of sources could not be read.
+USER@OMG:~$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+E: Invalid value set for option Signed-By regarding source https://download.docker.com/linux/ubuntu/ echo (not a fingerprint)
+E: Invalid value set for option Signed-By regarding source https://download.docker.com/linux/ubuntu/ echo (not a fingerprint)
+E: The list of sources could not be read.
+USER@OMG:~$ sudo docker run ubuntu
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                      PORTS     NAMES
+6ffcb7e42d4b   ubuntu    "bash"    15 seconds ago   Exited (0) 11 seconds ago             nostalgic_dirac
