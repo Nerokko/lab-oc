@@ -1,0 +1,149 @@
+1) Adding new user:
+	USER@OMG:~$ sudo adduser newone
+	[sudo] password for USER:
+	info: Adding user `newone' ...
+	info: Selecting UID/GID from range 1000 to 59999 ...
+	info: Adding new group `newone' (1001) ...
+	info: Adding new user `newone' (1001) with group `newone' ...
+	info: Creating home directory `/home/newone' ...
+	info: Copying files from `/etc/skel' ...
+	New password: 
+	Retype new password: 
+	passwd: password updated successfully
+	Changing the user information for newone
+	Enter the new value, or press ENTER for the default
+		Full Name []: Newest Onest
+		Room Number []: 2
+		Work Phone []: 88008880088
+		Home Phone []: 791544
+		Other []: boo
+	Is the information correct? [Y/n] Y
+	info: Adding new user `newone' to supplemental / extra groups `users' ...
+	info: Adding user `newone' to group `users' ...
+
+
+1.1) Check general user info:
+	USER@OMG:~$ cd Documents
+	USER@OMG:~/Documents$ cat /etc/passwd | grep newone
+	newone:x:1001:1001:Newest Onest,2,88008880088,791544,boo:/home newone: bin/bash
+
+
+
+1.2) Check shadowed password:
+	USER@OMG:~/Documents$ sudo cat /etc/shadow | grep newone
+	newone:$y$j9T$UVnRbpdDnreTrimsgKTOu1$qo2oCvCuzKd5mm1na1QcfOoRpt2w5Ni9n6vu0nI8Ry0:20068:0:99999:7:::
+
+
+1.3) Check group info:
+	USER@OMG:~/Documents$  cat /etc/group | grep newone
+	users:x:100:USER,newone
+	newone:x:1001:
+
+
+
+1.4) Deleting new user:
+	USER@OMG:~/Documents$  sudo userdel -r newone
+	userdel: newone mail spool (/var/mail/newone) not found
+
+
+
+
+2) Group management:
+	USER@OMG:~/Documents$ sudo groupadd newonegroup
+
+
+
+
+2.1) Moving 'newmaksim' into newgroup:
+	USER@OMG:~/Documents$ sudo usermod -g newonegroup newone
+	
+
+
+2.2) Adding 'newone' into newgsecondgroup but not deleting from newgroup:
+	USER@OMG:~/Documents$ sudo groupadd newsecondgroup
+	USER@OMG:~/Documents$ sudo usermod -aG newsecondgroup newone
+
+
+
+2.3) Removing user from newsecondgroup:
+	USER@OMG:~/Documents$  sudo gpasswd -d newone newsecondgroup
+	Removing user newone from group newsecondgroup
+
+
+
+3) Adding new superuser:
+	USER@OMG:~/Documents$ sudo adduser newadm
+	[sudo] password for USER:
+	info: Adding user `newadm' ...
+	info: Selecting UID/GID from range 1000 to 59999 ...
+	info: Adding new group `newadm' (1004) ...
+	info: Adding new user `newadm' (1002) with group `newadm' ...	
+	info: Creating home directory `/home/newadm' ...
+	info: Copying files from `/etc/skel' ...
+	New password: 
+	Retype new password: 
+	passwd: password updated successfully
+	Changing the user information for newadm
+	Enter the new value, or press ENTER for the default
+		Full Name []: 
+		Room Number []: 
+		Work Phone []: 
+		Home Phone []: 
+		Other []: 
+	Is the information correct? [Y/n] Y
+	USER@OMG:~/Documents$ sudo usermod -aG sudo newadm
+
+
+
+3.1) Logging in via adminmaksim:
+	USER@OMG:~/Documents$ su - newadm
+	To run a command as administrator (user "root"), use "sudo <command>".
+	See "man sudo_root" for details.
+
+
+3.2) Executing admin command:
+	USER@OMG:~/Documents$ sudo apt update
+[sudo] password for newone: 
+Hit:1 http://ru.archive.ubuntu.com/ubuntu jammy InRelease                                                    
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]  
+Get:3 http://ru.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:4 http://ru.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:5 http://ru.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2 067 kB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1 848 kB]
+Get:7 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages [546 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [299 kB]                            
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [13,3 kB]                     
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [2 444 kB]                   
+Get:11 http://ru.archive.ubuntu.com/ubuntu jammy-updates/main i386 Packages [705 kB]                           
+Get:12 http://ru.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [358 kB]                          
+Get:13 http://ru.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17,9 kB]                   
+Get:14 http://ru.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2 504 kB]                  
+Get:15 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [421 kB]                     
+Get:16 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [909 kB]                       
+Get:17 http://ru.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [432 kB]                    
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/universe i386 Packages [631 kB]                        
+Get:19 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [179 kB]                       
+Get:20 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [19,4 kB]                
+Get:21 http://ru.archive.ubuntu.com/ubuntu jammy-updates/universe i386 Packages [736 kB]                       
+Get:22 http://ru.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1 130 kB]                    
+Get:23 http://ru.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [264 kB]                      
+Get:24 http://ru.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26,3 kB]               
+Get:25 http://ru.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67,7 kB]                       
+Get:26 http://ru.archive.ubuntu.com/ubuntu jammy-backports/main i386 Packages [59,9 kB]                        
+Get:27 http://ru.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]                   
+Get:28 http://ru.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28,8 kB]                   
+Get:29 http://ru.archive.ubuntu.com/ubuntu jammy-backports/universe i386 Packages [17,3 kB]                    
+Get:30 http://ru.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]               
+Fetched 16,1 MB in 15s (1 067 kB/s)
+
+
+
+4) Modification of 'newone' now can execute sudo apt and adduser without pass:
+	put in /etc/sudoers/ 'newone ALL=(ALL) NOPASSWD: /usr/bin/apt, /usr/bin/useradd'
+	USER@OMG:~/Documents$ su newone
+	USER@OMG:~/Documents$ sudo apt update
+Hit:1 http://ru.archive.ubuntu.com/ubuntu jammy InRelease                      
+Hit:2 http://security.ubuntu.com/ubuntu jammy-security InRelease               
+Hit:3 http://ru.archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:4 http://ru.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Reading package lists... Done
